@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>{{ page.title }} &middot; {{ config.title }}</title>
+{% endblock title %}
+
+{% block description %}
+<meta name="description" content="{{ page.description | default(value=page.summary | default(value=config.description)) | striptags }}">
+{% endblock description %}
+
+{% block ogtags %}
+<meta property="og:type" content="article">
+<meta property="og:title" content="{{ page.title }}">
+<meta property="og:description" content="{{ page.description | default(value=config.description) }}">
+<meta property="og:url" content="{{ page.permalink | safe }}">
+{% endblock ogtags %}
+
+{% block content %}
+<article class="post">
+  <header class="post-header">
+    <h1>{{ page.title }}</h1>
+    {% if page.date %}
+    <div class="post-meta">
+      <time datetime="{{ page.date }}">{{ page.date | date(format=config.extra.date_format) }}</time>
+      {% if page.reading_time %} &middot; {{ page.reading_time }} min read{% endif %}
+    </div>
+    {% endif %}
+    {% if page.taxonomies.tags %}
+    <div class="post-tags">
+      {% for tag in page.taxonomies.tags %}
+      <a href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}">#{{ tag }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </header>
+
+  <div class="post-content">
+    {{ page.content | safe }}
+  </div>
+</article>
+{% endblock content %}

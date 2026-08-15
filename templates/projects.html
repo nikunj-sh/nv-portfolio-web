@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>{{ section.title }} &middot; {{ config.title }}</title>
+{% endblock title %}
+
+{% block content %}
+<article class="section projects">
+  <h1>{{ section.title }}</h1>
+
+  {% if section.content %}
+  <div class="section-intro">{{ section.content | safe }}</div>
+  {% endif %}
+
+  <ul class="project-list">
+    {% for project in section.extra.projects %}
+    <li class="project">
+      <div class="project-title">
+        {% if project.url %}
+        <a href="{{ project.url }}" rel="noopener">{{ project.name }}</a>
+        {% else %}
+        <span>{{ project.name }}</span>
+        {% endif %}
+        {% if project.source %}<a class="project-source" href="{{ project.source }}" rel="noopener">source</a>{% endif %}
+      </div>
+      <p class="project-desc">{{ project.description }}</p>
+      {% if project.tech %}<p class="project-tech">{{ project.tech }}</p>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</article>
+{% endblock content %}

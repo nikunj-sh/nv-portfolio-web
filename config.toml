@@ -1,0 +1,65 @@
+# The URL the site will be built for
+base_url = "https://nikunjvasava.me"
+
+title = "Nikunj Vasava"
+description = "Personal website of Nikunj Vasava — ramblings on tech, engineering and life."
+
+# Language
+default_language = "en"
+
+# Generate an RSS/Atom feed
+generate_feeds = true
+feed_filenames = ["atom.xml"]
+
+# Compile all Sass files in the sass directory (we use plain CSS, so off)
+compile_sass = false
+
+# Minify the generated HTML output
+minify_html = false
+
+# Build a search index (off by default; enable if you add JS search)
+build_search_index = false
+
+taxonomies = [
+  { name = "tags", feed = true },
+]
+
+[markdown]
+# Render emoji shortcodes like :tada:
+render_emoji = true
+# Turn "quotes" and -- into typographic equivalents
+smart_punctuation = true
+# Put anchor links to the right of headings
+insert_anchor_links = "right"
+
+[markdown.highlighting]
+light_theme = "github-light"
+dark_theme = "github-dark-dimmed"
+
+[extra]
+# How dates are displayed across the site
+date_format = "%d %b, %Y"
+
+# Author shown in the footer and feed
+author = "Nikunj Vasava"
+
+# Social / contact links (leave blank to hide)
+github = ""
+linkedin = "https://www.linkedin.com/in/nikunj-vasava/"
+twitter = "https://x.com/Nikunjvasava9"
+instagram = "https://www.instagram.com/n1kunj_/"
+email = ""
+
+# The top navigation menu
+[[extra.main_menu]]
+name = "Home"
+url = "$BASE_URL/"
+
+[[extra.main_menu]]
+name = "Posts"
+url = "$BASE_URL/posts/"
+
+[[extra.main_menu]]
+name = "Projects"
+url = "$BASE_URL/projects/"
+

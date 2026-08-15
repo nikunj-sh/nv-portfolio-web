@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Apply the saved theme before paint to avoid a flash of the wrong theme -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'dark' || t === 'light') {
+          document.documentElement.setAttribute('data-theme', t);
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  {% block title %}
+  <title>{{ config.title }}</title>
+  {% endblock title %}
+
+  {% block description %}
+  <meta name="description" content="{{ config.description }}">
+  {% endblock description %}
+
+  <meta name="author" content="{{ config.extra.author }}">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="{{ config.title }}">
+  {% block ogtags %}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ config.title }}">
+  <meta property="og:description" content="{{ config.description }}">
+  <meta property="og:url" content="{{ current_url | default(value=config.base_url) }}">
+  {% endblock ogtags %}
+
+  <link rel="stylesheet" href="{{ get_url(path='css/main.css', cachebust=true) }}">
+  {% if config.generate_feeds %}
+  <link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path='atom.xml', trailing_slash=false) }}">
+  {% endif %}
+  <link rel="icon" href="{{ get_url(path='favicon.svg') }}" type="image/svg+xml">
+
+  {% block extra_head %}{% endblock extra_head %}
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <ul>
+        {% for item in config.extra.main_menu %}
+        <li>
+          <a href="{{ item.url | replace(from='$BASE_URL', to=config.base_url) | safe }}"
+             {% if current_url and current_url == item.url | replace(from='$BASE_URL', to=config.base_url) %}class="active"{% endif %}>
+            {{ item.name }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      <button id="theme-toggle" type="button" class="theme-toggle" aria-label="Toggle theme" title="Toggle light/dark theme">☾</button>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock content %}
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      &copy; {{ now() | date(format='%Y') }} {{ config.extra.author }}
+    </p>
+  </footer>
+
+  <script>
+    (function () {
+      var btn = document.getElementById('theme-toggle');
+      if (!btn) return;
+      var media = window.matchMedia('(prefers-color-scheme: dark)');
+      function current() {
+        var explicit = document.documentElement.getAttribute('data-theme');
+        if (explicit === 'dark' || explicit === 'light') return explicit;
+        return media.matches ? 'dark' : 'light';
+      }
+      function render() {
+        var isDark = current() === 'dark';
+        btn.textContent = isDark ? '☀' : '☾';
+        btn.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
+      }
+      render();
+      btn.addEventListener('click', function () {
+        var next = current() === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('theme', next); } catch (e) {}
+        render();
+      });
+      // Follow the system if the user hasn't made an explicit choice.
+      media.addEventListener('change', function () {
+        if (!document.documentElement.getAttribute('data-theme')) render();
+      });
+    })();
+  </script>
+</body>
+</html>

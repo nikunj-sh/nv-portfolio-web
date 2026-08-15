@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<article class="home">
+  <div class="hero">
+    <div class="hero-body">
+      {{ section.content | safe }}
+
+      <div class="social-links">
+        {% if config.extra.linkedin %}
+        <a href="{{ config.extra.linkedin }}" rel="me noopener" target="_blank">LinkedIn</a>
+        {% endif %}
+        {% if config.extra.twitter %}
+        <a href="{{ config.extra.twitter }}" rel="me noopener" target="_blank">X / Twitter</a>
+        {% endif %}
+        {% if config.extra.instagram %}
+        <a href="{{ config.extra.instagram }}" rel="me noopener" target="_blank">Instagram</a>
+        {% endif %}
+        {% if config.extra.github %}
+        <a href="{{ config.extra.github }}" rel="me noopener" target="_blank">GitHub</a>
+        {% endif %}
+        {% if config.extra.email %}
+        <a href="mailto:{{ config.extra.email }}">Email</a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="hero-photo">
+      <div class="avatar-wrap">
+        <img class="avatar" src="/images/profile.png" alt="{{ config.extra.author }}">
+      </div>
+    </div>
+  </div>
+</article>
+{% endblock content %}
