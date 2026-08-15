@@ -2,7 +2,6 @@
 
 Personal website of **Nikunj Vasava**, built with the [Zola](https://www.getzola.org/)
 static site generator. Minimal, fast, and inspired by the bearblog aesthetic
-(à la [mrkaran.dev](https://mrkaran.dev/)).
 
 ## Getting started
 
