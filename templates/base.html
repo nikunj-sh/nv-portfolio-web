@@ -35,7 +35,7 @@
   <meta property="og:url" content="{{ current_url | default(value=config.base_url) }}">
   {% endblock ogtags %}
 
-  <link rel="stylesheet" href="{{ get_url(path='css/main.css', cachebust=true) }}">
+  <link rel="stylesheet" href="{{ get_url(path='css/main.css') }}">
   {% if config.generate_feeds %}
   <link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path='atom.xml', trailing_slash=false) }}">
   {% endif %}
